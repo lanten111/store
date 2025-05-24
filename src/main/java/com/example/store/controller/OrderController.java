@@ -5,6 +5,7 @@ import com.example.store.entity.Order;
 import com.example.store.mapper.OrderMapper;
 import com.example.store.repository.OrderRepository;
 
+import com.example.store.service.OrderService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ public class OrderController {
 
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
+    private final OrderService orderService;
 
     @GetMapping
     public List<OrderDTO> getAllOrders() {
@@ -29,5 +31,10 @@ public class OrderController {
     @ResponseStatus(HttpStatus.CREATED)
     public OrderDTO createOrder(@RequestBody Order order) {
         return orderMapper.orderToOrderDTO(orderRepository.save(order));
+    }
+
+    @GetMapping("/{orderId}")
+    public OrderDTO getOrder(@PathVariable Long orderId){
+        return orderService.getOrderById(orderId);
     }
 }
