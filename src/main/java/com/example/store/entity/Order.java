@@ -1,11 +1,11 @@
 package com.example.store.entity;
 
 import jakarta.persistence.*;
-
-import lombok.Data;
+import lombok.*;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "\"order\"")
 public class Order {
     @Id
@@ -16,4 +16,5 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
+
 }
