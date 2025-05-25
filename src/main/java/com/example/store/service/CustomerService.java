@@ -3,6 +3,7 @@ package com.example.store.service;
 import com.example.store.dto.CustomerDTO;
 import com.example.store.entity.Customer;
 import com.example.store.exception.exceptions.AlreadyExistException;
+import com.example.store.exception.exceptions.NotFoundException;
 import com.example.store.mapper.CustomerMapper;
 import com.example.store.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,16 @@ public class CustomerService {
         } else {
             String message = String.format("Customer with name %s already exist", customerDTO.getName());
             throw new AlreadyExistException(message, message);
+        }
+    }
+
+    public List<CustomerDTO> customerSearch(String query){
+        List<Customer> customerList = customerRepository.findByNameContainsIgnoreCase(query);
+        if ( customerList.isEmpty() ){
+            String message = String.format("No customer containing query word %s exist", query);
+            throw new NotFoundException(message, message);
+        } else {
+            return customerMapper.customersToCustomerDTOs(customerList);
         }
     }
 }

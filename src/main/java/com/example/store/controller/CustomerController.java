@@ -30,4 +30,9 @@ public class CustomerController {
     public CustomerDTO createCustomer(@RequestBody CustomerDTO customerDTO) {
         return customerService.createCustomer(customerDTO);
     }
+
+    @GetMapping("/search/{query}")
+    public List<CustomerDTO> searchCustomer(@PathVariable String query){
+        return customerService.customerSearch(query);
+    }
 }
