@@ -12,7 +12,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String description;
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
