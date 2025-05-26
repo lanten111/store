@@ -31,7 +31,7 @@ public class CustomerService {
     }
 
     @CacheEvict(cacheNames = {CUSTOMER_LIST_DTO_CACHE_NAME,CUSTOMER_SEARCH_LIST_DTO_CACHE_NAME}, allEntries = true)
-    @CachePut(cacheNames = CUSTOMER_LIST_DTO_CACHE_NAME, key = "#result.id")
+    @CachePut(cacheNames = CUSTOMER_LIST_DTO_CACHE_NAME, key = "#result.customerId")
     public CustomerDTO createCustomer(CustomerDTO customerDTO){
         Optional<Customer> customerOptional = customerRepository.findByName(customerDTO.getName());
         if ( customerOptional.isEmpty() ){
