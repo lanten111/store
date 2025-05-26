@@ -2,6 +2,7 @@ package com.example.store.service;
 
 import com.example.store.dto.ProductDTO;
 import com.example.store.entity.Product;
+import com.example.store.exception.exceptions.AlreadyExistException;
 import com.example.store.exception.exceptions.NotFoundException;
 import com.example.store.mapper.ProductMapper;
 import com.example.store.repository.ProductRepository;
@@ -15,27 +16,31 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductService {
 
-    private final ProductRepository repository;
-    private final ProductMapper mapper;
+    private final ProductRepository productRepository;
+    private final ProductMapper productMapper;
 
     public ProductDTO createProduct(ProductDTO productDTO){
-        Optional<Product> optionalProduct =  repository.findByName(productDTO.getName());
-        if ( optionalProduct.isPresent()){
-            return mapper.productToProductDTO(repository.save(mapper.productDTOToProduct(productDTO)));
+        Optional<Product> optionalProduct =  productRepository.findByName(productDTO.getName());
+        if ( optionalProduct.isEmpty()){
+            return productMapper.productToProductDTO(productRepository.save(productMapper.productDTOToProduct(productDTO)));
         } else {
             String message = String.format("Product with name %s already exist", productDTO.getName());
-            throw new NotFoundException(message, message);
+            throw new AlreadyExistException(message, message);
         }
     }
 
     public List<ProductDTO> getProducts(){
-        return mapper.productsTOProductDTOs(repository.findAll());
+        return productMapper.productsTOProductDTOs(productRepository.findAll());
     }
 
     public ProductDTO getProduct(Long id){
-        Optional<Product> optionalProduct = repository.findById(id);
+            return productMapper.productToProductDTO(getProductEntity(id));
+    }
+
+    protected Product getProductEntity(Long id){
+        Optional<Product> optionalProduct = productRepository.findById(id);
         if (optionalProduct.isPresent()) {
-            return mapper.productToProductDTO(optionalProduct.get());
+            return optionalProduct.get();
         }else {
             String message = String.format("Product with id %s not found", id);
             throw new NotFoundException(message, message);
