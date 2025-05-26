@@ -14,6 +14,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -67,6 +68,16 @@ public class GlobalExceptionHandler {
         logger.error(developerMessage, e);
         return new ResponseEntity<>(buildErrorResponse(userMessage, httpStatus.value()), httpStatus);
     }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<Map<String, String>> handleUnhandledGeneralException(NoResourceFoundException e){
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+        String developerMessage = e.getMessage();
+        String userMessage =  messageSource.getMessage("store.general.error", null, Locale.getDefault());
+        logger.error(developerMessage, e);
+        return new ResponseEntity<>(buildErrorResponse(userMessage, httpStatus.value()), httpStatus);
+    }
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationException(MethodArgumentNotValidException  e){
