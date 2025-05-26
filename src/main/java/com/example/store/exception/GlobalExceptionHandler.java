@@ -1,8 +1,11 @@
 package com.example.store.exception;
 
 import com.example.store.exception.exceptions.*;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -14,14 +17,18 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
+@RequiredArgsConstructor
 public class GlobalExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
+    @Autowired
+    private final MessageSource messageSource;
 
     @ExceptionHandler(BadRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -50,6 +57,15 @@ public class GlobalExceptionHandler {
         HttpStatus httpStatus = HttpStatus.FORBIDDEN;
         logger.info(e.getDeveloperMessage());
         return new ResponseEntity<>(buildErrorResponse(e.getMessage(), httpStatus.value()), httpStatus);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Map<String, String>> handleUnhandledGeneralException(Exception e){
+        HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        String developerMessage = e.getMessage();
+        String userMessage =  messageSource.getMessage("store.general.error", null, Locale.getDefault());
+        logger.error(developerMessage, e);
+        return new ResponseEntity<>(buildErrorResponse(userMessage, httpStatus.value()), httpStatus);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
