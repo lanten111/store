@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -12,13 +14,13 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long productId;
 
     private String name;
 
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Order order;
+    @ManyToMany(mappedBy = "products")
+    private List<Order> order;
 
 }
