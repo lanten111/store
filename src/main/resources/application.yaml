@@ -18,12 +18,12 @@ spring:
         default_batch_fetch_size: 10
 cache:
   ttl: #in secods
-      CUSTOMER_LIST_DTO_CACHE: 86400
-      ORDER_DTO_CACHE: 86400
-      ORDER_LIST_DTO_CACHE: 86400
-      CUSTOMER_DTO_CACHE: 86400
-      CUSTOMER_SEARCH_LIST_DTO_CACHE: 86400
-      PRODUCT_LIST_DTO_CACHE: 86400
-      PRODUCT_DTO_CACHE: 86400
+      CUSTOMER_LIST_DTO_CACHE: 30
+      ORDER_DTO_CACHE: 30
+      ORDER_LIST_DTO_CACHE: 30
+      CUSTOMER_DTO_CACHE: 30
+      CUSTOMER_SEARCH_LIST_DTO_CACHE: 30
+      PRODUCT_LIST_DTO_CACHE: 30
+      PRODUCT_DTO_CACHE: 30
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
