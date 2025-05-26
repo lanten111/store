@@ -1,13 +1,9 @@
 package com.example.store.controller;
 
 import com.example.store.dto.CustomerDTO;
-import com.example.store.entity.Customer;
-import com.example.store.mapper.CustomerMapper;
-import com.example.store.repository.CustomerRepository;
 
 import com.example.store.service.CustomerService;
 import com.example.store.validation.OnCreate;
-import com.example.store.validation.OnSearch;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 
