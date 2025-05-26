@@ -20,7 +20,7 @@ public class ProductController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ProductDTO createProduct( @Validated(OnCreate.class) @RequestBody ProductDTO productDTO){
+    public ProductDTO createProduct( @Validated(OnCreate.class) @RequestBody ProductDTO productDTO ){
         return productService.createProduct(productDTO);
     }
 
@@ -30,7 +30,7 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public ProductDTO getProduct(@Validated(OnGet.class)  @PathVariable long productId){
+    public ProductDTO getProduct(@Validated( OnGet.class)  @PathVariable long productId ){
         return productService.getProduct(productId);
     }
 }
