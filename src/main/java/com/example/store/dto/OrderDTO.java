@@ -7,8 +7,7 @@ import java.util.List;
 
 @Data
 public class OrderDTO implements Serializable {
-    private Long id;
-    private String description;
+    private Long orderId;
     private OrderCustomerDTO customer;
-    private List<ProductDTO> products;
+    private List<OrderProductDTO> products;
 }
