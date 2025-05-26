@@ -2,7 +2,9 @@ package com.example.store.dto;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class ProductOrderDTO {
+public class ProductOrderDTO  implements Serializable {
     private Long orderId;
 }
