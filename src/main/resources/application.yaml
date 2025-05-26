@@ -5,6 +5,7 @@ spring:
     password: admin
   data:
     redis:
+      time-to-live: 60000
       host: localhost
       port: 6379
   jpa:
@@ -15,5 +16,14 @@ spring:
         format_sql: true
         use_sql_comments: true
         default_batch_fetch_size: 10
+cache:
+  ttl: #in secods
+      CUSTOMER_LIST_DTO_CACHE: 86400
+      ORDER_DTO_CACHE: 86400
+      ORDER_LIST_DTO_CACHE: 86400
+      CUSTOMER_DTO_CACHE: 86400
+      CUSTOMER_SEARCH_LIST_DTO_CACHE: 86400
+      PRODUCT_LIST_DTO_CACHE: 86400
+      PRODUCT_DTO_CACHE: 86400
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
