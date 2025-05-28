@@ -46,12 +46,12 @@ public class ProductService {
             return productMapper.productToProductDTO(getProductEntity(productId));
     }
 
-    protected Product getProductEntity(Long id){
-        Optional<Product> optionalProduct = productRepository.findById(id);
+    public Product getProductEntity(Long productId){
+        Optional<Product> optionalProduct = productRepository.findById(productId);
         if (optionalProduct.isPresent()) {
             return optionalProduct.get();
         }else {
-            String message = String.format("Product with id %s not found", id);
+            String message = String.format("Product with id %s not found", productId);
             throw new NotFoundException(message, message);
         }
     }
