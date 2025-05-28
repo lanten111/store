@@ -1,4 +1,4 @@
-package com.example.store.controller;
+package com.example.store.service;
 
 import com.example.store.dto.ProductDTO;
 import com.example.store.entity.Product;
