@@ -53,9 +53,39 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.6.2'
 
+    testImplementation'org.testcontainers:junit-jupiter'
+    testImplementation'org.testcontainers:postgresql'
+    testImplementation'io.rest-assured:rest-assured'
+    testImplementation'com.redis:testcontainers-redis:2.2.2'
 
 
 }
+
+//check.dependsOn integrationTest
+
+
+sourceSets {
+    integrationTest {
+        java.srcDir file('src/integration-tests/java/')
+        resources.srcDir file('src/integration-tests/resources')
+        compileClasspath += sourceSets.main.output + sourceSets.test.output + configurations.testCompileClasspath
+        runtimeClasspath += sourceSets.main.output + sourceSets.test.output + configurations.testRuntimeClasspath
+
+    }
+}
+
+
+tasks.register('integrationTest', Test) {
+    useJUnitPlatform()
+    description = 'Runs the integration tests.'
+    group = 'verification'
+
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    shouldRunAfter test
+}
+
+
 
 tasks.named('test') {
     useJUnitPlatform()
