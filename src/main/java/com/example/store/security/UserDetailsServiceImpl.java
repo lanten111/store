@@ -16,11 +16,11 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class CustomUserDetailsService implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     private CustomerRepository customerRepository;
 
-    private static final Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
     @Override
     public UserDetails loadUserByUsername(String email) {
@@ -35,11 +35,4 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new NotFoundException(message, message);
         }
     }
-
-    //    private Collection < ? extends GrantedAuthority> mapRolesToAuthorities(Collection <Role> roles) {
-    //        Collection < ? extends GrantedAuthority> mapRoles = roles.stream()
-    //                .map(role -> new SimpleGrantedAuthority(role.getName()))
-    //                .collect(Collectors.toList());
-    //        return mapRoles;
-
 }

@@ -1,6 +1,7 @@
 package com.example.store.controller;
 
 import com.example.store.dto.CustomerDTO;
+import com.example.store.dto.TokenDTO;
 import com.example.store.service.CustomerService;
 import com.example.store.validation.OnCreate;
 import com.example.store.validation.OnLogin;
@@ -20,17 +21,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1//customer")
+@RequestMapping("/v1/customer")
 @RequiredArgsConstructor
 public class CustomerController {
 
     private final CustomerService customerService;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(
+    public ResponseEntity<TokenDTO> login(
             @Validated(OnLogin.class) @RequestBody CustomerDTO customerDTO, HttpServletRequest request) {
-        customerService.login(customerDTO, request);
-        return new ResponseEntity<>("User Logged in successfully", HttpStatus.OK);
+        return new ResponseEntity<>(customerService.login(customerDTO, request), HttpStatus.OK);
     }
 
     @PostMapping("/logout")

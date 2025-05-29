@@ -3,6 +3,7 @@ package com.example.store.dto;
 import com.example.store.validation.OnCreate;
 import com.example.store.validation.OnLogin;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -36,6 +37,7 @@ public class CustomerDTO implements Serializable {
             regexp = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*()_+=-]).{8,}$",
             message = "{customer.create.invalid.password}",
             groups = {OnCreate.class, OnLogin.class})
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String password;
 
     private List<CustomerOrderDTO> orders;

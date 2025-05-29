@@ -22,7 +22,7 @@ public class CustomerControllerIT extends BaseIT {
         CustomerDTO customerDTO = given().contentType(ContentType.JSON)
                 .body(getCustomerDTO())
                 .when()
-                .post("/customer")
+                .post("/v1/customer")
                 .then()
                 .statusCode(201)
                 .extract()
@@ -65,9 +65,11 @@ public class CustomerControllerIT extends BaseIT {
                 .body("name", contains(getCustomerDTO().getName()));
     }
 
-    public CustomerDTO getCustomerDTO() {
+    public static CustomerDTO getCustomerDTO() {
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setName("John doe");
+        customerDTO.setEmail("john@does.com");
+        customerDTO.setPassword("P@assweord123");
         return customerDTO;
     }
 }

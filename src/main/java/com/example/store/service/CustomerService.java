@@ -1,6 +1,7 @@
 package com.example.store.service;
 
 import com.example.store.dto.CustomerDTO;
+import com.example.store.dto.TokenDTO;
 import com.example.store.entity.Customer;
 import com.example.store.exception.exceptions.AlreadyExistException;
 import com.example.store.exception.exceptions.NotFoundException;
@@ -39,8 +40,8 @@ public class CustomerService {
 
     private static final Logger logger = LoggerFactory.getLogger(CustomerService.class);
 
-    public void login(CustomerDTO customerDTO, HttpServletRequest request) {
-        authenticationService.login(customerDTO, request);
+    public TokenDTO login(CustomerDTO customerDTO, HttpServletRequest request) {
+        return authenticationService.login(customerDTO, request);
     }
 
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
@@ -57,13 +58,15 @@ public class CustomerService {
             allEntries = true)
     @CachePut(cacheNames = CUSTOMER_LIST_DTO_CACHE_NAME, key = "#result.customerId")
     public CustomerDTO createCustomer(CustomerDTO customerDTO) {
-        Optional<Customer> customerOptional = customerRepository.findByName(customerDTO.getName());
+        Optional<Customer> customerOptional = customerRepository.findByEmail(customerDTO.getEmail());
         if (customerOptional.isEmpty()) {
             customerDTO.setPassword(passwordEncoder.encode(customerDTO.getPassword()));
-            return customerMapper.customerToCustomerDTO(
-                    customerRepository.save(customerMapper.customerDtoToCustomer(customerDTO)));
+            Customer customer = customerRepository.save(customerMapper.customerDtoToCustomer(customerDTO));
+            customer.setPassword(null);
+            return customerMapper.customerToCustomerDTO(customer);
         } else {
-            String message = String.format("Customer with name %s already exist", customerDTO.getName());
+            logger.warn("Customer with email {} already exist", customerDTO.getEmail());
+            String message = String.format("Customer with email %s already exist", customerDTO.getEmail());
             throw new AlreadyExistException(message, message);
         }
     }

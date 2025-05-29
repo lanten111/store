@@ -8,6 +8,7 @@ import com.example.store.mapper.ProductMapper;
 import com.example.store.repository.ProductRepository;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -41,7 +42,7 @@ class ProductServiceTest {
 
     @Test
     void CanSuccessfullyGetProductById() {
-        when(productRepository.findById(productId)).thenReturn(Optional.ofNullable(getProduct()));
+//        when(productRepository.findById(productId)).thenReturn(Optional.ofNullable(getProduct()));
         when(productService.getProductEntity(productId)).thenReturn(getProduct());
         when(productMapper.productToProductDTO(any())).thenReturn(getProductDTO());
 

@@ -94,6 +94,13 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(buildErrorResponse(userMessage, httpStatus.value()), httpStatus);
     }
 
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<Map<String, String>> handleUnauthorizedException(UnauthorizedException e){
+        HttpStatus httpStatus = HttpStatus.UNAUTHORIZED;
+        logger.error(e.getDeveloperMessage());
+        return new ResponseEntity<>(buildErrorResponse(e.getMessage(), httpStatus.value()), httpStatus);
+    }
+
     public Map<String, String> buildErrorResponse(String message, int errorCode) {
         Map<String, String> errorResponse = new HashMap<>();
         errorResponse.put("message", message);
