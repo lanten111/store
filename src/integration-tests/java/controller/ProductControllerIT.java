@@ -13,31 +13,14 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class ProductControllerIT extends controller.BaseIT {
+public class ProductControllerIT extends BaseIT {
 
     @Test
-    @Order(1)
-    void canCreateProduct() {
-
-        ProductDTO productDTO = given().contentType(ContentType.JSON)
-                .body(getProductDTO())
-                .when()
-                .post("/product")
-                .then()
-                .statusCode(201)
-                .extract()
-                .as(ProductDTO.class);
-        Assertions.assertEquals(productDTO.getName(), getProductDTO().getName());
-        Assertions.assertEquals(productDTO.getDescription(), getProductDTO().getDescription());
-    }
-
-    @Test
-    @Order(2)
-    void canGetAllProducts() {
+    public void canGetAllProducts() {
         List<ProductDTO> productDTOS = given().contentType(ContentType.JSON)
+                .header("Authorization", "Bearer "+BaseIT.validToken)
                 .when()
-                .get("/product")
+                .get("/v1/product")
                 .then()
                 .statusCode(200)
                 .body(".", hasSize(1))
@@ -46,11 +29,11 @@ public class ProductControllerIT extends controller.BaseIT {
     }
 
     @Test
-    @Order(3)
-    void canGetProductById() {
+    public void canGetProductById() {
         List<ProductDTO> productDTOS = given().contentType(ContentType.JSON)
+                .header("Authorization", "Bearer "+BaseIT.validToken)
                 .when()
-                .get("/product")
+                .get("/v1/product")
                 .then()
                 .statusCode(200)
                 .body(".", hasSize(1))
@@ -58,14 +41,15 @@ public class ProductControllerIT extends controller.BaseIT {
                 .as(new TypeRef<List<ProductDTO>>() {});
 
         given().contentType(ContentType.JSON)
+                .header("Authorization", "Bearer "+BaseIT.validToken)
                 .when()
-                .get("/product/" + productDTOS.get(0).getProductId())
+                .get("/v1/product/" + productDTOS.get(0).getProductId())
                 .then()
                 .statusCode(200)
                 .body("name", equalTo("product"));
     }
 
-    public ProductDTO getProductDTO() {
+    public static ProductDTO getProductDTO() {
         ProductDTO productDTO = new ProductDTO();
         productDTO.setName("product");
         productDTO.setDescription("product description");

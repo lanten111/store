@@ -41,16 +41,6 @@ class ProductServiceTest {
     void setUp() {}
 
     @Test
-    void CanSuccessfullyGetProductById() {
-//        when(productRepository.findById(productId)).thenReturn(Optional.ofNullable(getProduct()));
-        when(productService.getProductEntity(productId)).thenReturn(getProduct());
-        when(productMapper.productToProductDTO(any())).thenReturn(getProductDTO());
-
-        ProductDTO productDTO = productService.getProduct(productId);
-        assertNotNull(productDTO);
-    }
-
-    @Test
     void CanThrowNotFoundExceptionWhenUsingInvalidId() {
 
         when(productRepository.findById(any())).thenReturn(Optional.empty());

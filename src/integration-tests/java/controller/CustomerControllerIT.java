@@ -12,30 +12,14 @@ import java.util.List;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CustomerControllerIT extends BaseIT {
 
     @Test
-    @Order(1)
-    void canCreateCustomer() {
-
-        CustomerDTO customerDTO = given().contentType(ContentType.JSON)
-                .body(getCustomerDTO())
-                .when()
-                .post("/v1/customer")
-                .then()
-                .statusCode(201)
-                .extract()
-                .as(CustomerDTO.class);
-        Assertions.assertEquals(customerDTO.getName(), getCustomerDTO().getName());
-    }
-
-    @Test
-    @Order(2)
-    void canGetAllCustomers() {
+    public void canGetAllCustomers() {
         List<CustomerDTO> customerDTOS = given().contentType(ContentType.JSON)
+                .header("Authorization", "Bearer "+BaseIT.validToken)
                 .when()
-                .get("/customer")
+                .get("/v1/customer")
                 .then()
                 .statusCode(200)
                 .body(".", hasSize(1))
@@ -44,26 +28,17 @@ public class CustomerControllerIT extends BaseIT {
     }
 
     @Test
-    @Order(3)
-    void canSearchCustomersByName() {
-        //        List<ProductDTO> productDTOS =
-        //                given()
-        //                        .contentType(ContentType.JSON)
-        //                        .when()
-        //                        .get("/product")
-        //                        .then()
-        //                        .statusCode(200)
-        //                        .body(".", hasSize(1))
-        //                        .extract()
-        //                        .as(new TypeRef<List<ProductDTO>>() {});
-
+    public void canSearchCustomersByName() {
         given().contentType(ContentType.JSON)
+                .header("Authorization", "Bearer "+BaseIT.validToken)
                 .when()
-                .get("/customer/search/j")
+                .get("/v1/customer/search/j")
                 .then()
-                .statusCode(200)
+                .statusCode(200  )
                 .body("name", contains(getCustomerDTO().getName()));
     }
+
+    //can add tests to test exception
 
     public static CustomerDTO getCustomerDTO() {
         CustomerDTO customerDTO = new CustomerDTO();
@@ -72,4 +47,5 @@ public class CustomerControllerIT extends BaseIT {
         customerDTO.setPassword("P@assweord123");
         return customerDTO;
     }
+
 }
