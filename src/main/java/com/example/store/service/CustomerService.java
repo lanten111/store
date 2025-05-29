@@ -62,7 +62,6 @@ public class CustomerService {
         if (customerOptional.isEmpty()) {
             customerDTO.setPassword(passwordEncoder.encode(customerDTO.getPassword()));
             Customer customer = customerRepository.save(customerMapper.customerDtoToCustomer(customerDTO));
-            customer.setPassword(null);
             return customerMapper.customerToCustomerDTO(customer);
         } else {
             logger.warn("Customer with email {} already exist", customerDTO.getEmail());
@@ -79,6 +78,16 @@ public class CustomerService {
             throw new NotFoundException(message, message);
         } else {
             return customerMapper.customersToCustomerDTOs(customerList);
+        }
+    }
+
+    public Customer getCustomerById(Long customerId) {
+        Optional<Customer> customerOptional = customerRepository.findById(customerId);
+        if (customerOptional.isPresent()) {
+            return customerOptional.get();
+        } else {
+            String message = String.format("customer with id %s not found", customerId);
+            throw new NotFoundException(message, message);
         }
     }
 }
