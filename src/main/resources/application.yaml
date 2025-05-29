@@ -4,7 +4,7 @@ server:
     context-path: /store/api
 spring:
   datasource:
-    url: jdbc:postgresql://${DB_HOST}:5433/store
+    url: jdbc:postgresql://${DB_HOST}:5432/store
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
   data:
