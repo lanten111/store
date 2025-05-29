@@ -37,7 +37,7 @@ public class ProductService {
         if (optionalProduct.isEmpty()) {
             logger.info("created product with name {}", productDTO.getName());
             return productMapper.productToProductDTO(
-                    productRepository.save(productMapper.productDTOToProduct(productDTO)));
+                    productRepository.save(productMapper.productDtoToProduct(productDTO)));
         } else {
             String message = String.format("Product with name %s already exist", productDTO.getName());
             logger.debug("Product with name {} already exist", productDTO.getName());
@@ -47,7 +47,7 @@ public class ProductService {
 
     @Cacheable(cacheNames = PRODUCT_LIST_DTO_CACHE_NAME, keyGenerator = "customKeyGenerator")
     public List<ProductDTO> getProducts() {
-        return productMapper.productsTOProductDTOs(productRepository.findAll());
+        return productMapper.productsToProductDTOs(productRepository.findAll());
     }
 
     @Cacheable(value = ORDER_DTO_CACHE_NAME, key = "#productId")
