@@ -28,7 +28,7 @@ jobs:
       - name: Run Unit Tests
         run: ./gradlew test
 
-      - name: Log in to Docker Hub
+      - name: Log in to Docker Hub1
         run: echo "${{ secrets.DOCKER_PAT }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
 #      - name: Run Integration Tests
