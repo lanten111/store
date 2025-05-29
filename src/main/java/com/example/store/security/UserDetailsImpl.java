@@ -1,7 +1,9 @@
 package com.example.store.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
+
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
@@ -10,8 +12,10 @@ import java.util.List;
 public class UserDetailsImpl implements org.springframework.security.core.userdetails.UserDetails {
 
     private String email;
+
     @JsonIgnore
     private String password;
+
     @Getter
     private Long id;
 
@@ -22,7 +26,6 @@ public class UserDetailsImpl implements org.springframework.security.core.userde
         this.password = password;
         this.id = id;
     }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
