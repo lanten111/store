@@ -1,4 +1,16 @@
 services:
+  store:
+    container_name: store
+    restart: always
+    environment:
+      - DB_USERNAME=admin
+      - DB_PASSWORD=admin
+      - DB_HOST=postgres
+      - REDIS_HOST=redis
+      - TOKEN_SECRET=IS5IobIItq0pRX9JL9TvdQ40Oa93u2Wojlign4V3L30
+    ports:
+      - 8086:8086
+    image: mumakahdo/store:latest
   postgres:
     container_name: postgres
     restart: always
