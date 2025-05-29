@@ -2,6 +2,7 @@ package com.example.store.service;
 
 import com.example.store.dto.OrderDTO;
 import com.example.store.dto.OrderProductDTO;
+import com.example.store.entity.Customer;
 import com.example.store.entity.Order;
 import com.example.store.entity.Product;
 import com.example.store.exception.exceptions.NotFoundException;
@@ -31,6 +32,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
     private final ProductService productService;
+    private final CustomerService customerService;
 
     private static final Logger logger = LoggerFactory.getLogger(OrderService.class);
 
@@ -54,8 +56,10 @@ public class OrderService {
             Product product = productService.getProductEntity(dto.getProductId());
             products.add(product);
         }
+        Customer customer = customerService.getCustomerById(orderDTO.getCustomer().getCustomerId());
         Order order = orderMapper.orderDtoToOrder(orderDTO);
         order.setProducts(products);
+        order.setCustomer(customer);
         Order savedOrder = orderRepository.save(order);
         logger.info(
                 "Created new order with id {} and user {}",
