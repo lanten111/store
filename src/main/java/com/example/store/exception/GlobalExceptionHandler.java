@@ -1,7 +1,9 @@
 package com.example.store.exception;
 
 import com.example.store.exception.exceptions.*;
+
 import lombok.RequiredArgsConstructor;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,54 +35,53 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BadRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<Map<String, String>> handleBadRequestException(BadRequestException e){
+    public ResponseEntity<Map<String, String>> handleBadRequestException(BadRequestException e) {
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
         logger.info(e.getDeveloperMessage());
         return new ResponseEntity<>(buildErrorResponse(e.getMessage(), httpStatus.value()), httpStatus);
     }
 
     @ExceptionHandler(AlreadyExistException.class)
-    public ResponseEntity<Map<String, String>> handleExistException(AlreadyExistException e){
+    public ResponseEntity<Map<String, String>> handleExistException(AlreadyExistException e) {
         HttpStatus httpStatus = HttpStatus.CONFLICT;
         logger.info(e.getDeveloperMessage());
         return new ResponseEntity<>(buildErrorResponse(e.getMessage(), httpStatus.value()), httpStatus);
     }
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<Map<String, String>> handleBadNotFoundException(NotFoundException e){
+    public ResponseEntity<Map<String, String>> handleBadNotFoundException(NotFoundException e) {
         HttpStatus httpStatus = HttpStatus.NOT_FOUND;
         logger.info(e.getDeveloperMessage());
         return new ResponseEntity<>(buildErrorResponse(e.getMessage(), httpStatus.value()), httpStatus);
     }
 
     @ExceptionHandler(ForbiddenException.class)
-    public ResponseEntity<Map<String, String>> handleForbiddenException(ForbiddenException e){
+    public ResponseEntity<Map<String, String>> handleForbiddenException(ForbiddenException e) {
         HttpStatus httpStatus = HttpStatus.FORBIDDEN;
         logger.info(e.getDeveloperMessage());
         return new ResponseEntity<>(buildErrorResponse(e.getMessage(), httpStatus.value()), httpStatus);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String, String>> handleUnhandledGeneralException(Exception e){
+    public ResponseEntity<Map<String, String>> handleUnhandledGeneralException(Exception e) {
         HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         String developerMessage = e.getMessage();
-        String userMessage =  messageSource.getMessage("store.general.error", null, Locale.getDefault());
+        String userMessage = messageSource.getMessage("store.general.error", null, Locale.getDefault());
         logger.error(developerMessage, e);
         return new ResponseEntity<>(buildErrorResponse(userMessage, httpStatus.value()), httpStatus);
     }
 
     @ExceptionHandler(NoResourceFoundException.class)
-    public ResponseEntity<Map<String, String>> handleUnhandledGeneralException(NoResourceFoundException e){
+    public ResponseEntity<Map<String, String>> handleUnhandledGeneralException(NoResourceFoundException e) {
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
         String developerMessage = e.getMessage();
-        String userMessage =  messageSource.getMessage("store.general.error", null, Locale.getDefault());
+        String userMessage = messageSource.getMessage("store.general.error", null, Locale.getDefault());
         logger.error(developerMessage, e);
         return new ResponseEntity<>(buildErrorResponse(userMessage, httpStatus.value()), httpStatus);
     }
 
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidationException(MethodArgumentNotValidException  e){
+    public ResponseEntity<Map<String, String>> handleValidationException(MethodArgumentNotValidException e) {
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
         BindingResult bindingResult = e.getBindingResult();
         List<String> errorMessages = bindingResult.getFieldErrors().stream()
@@ -88,12 +89,12 @@ public class GlobalExceptionHandler {
                 .collect(Collectors.toList());
 
         String developerMessage = e.getMessage();
-        String userMessage =  errorMessages.get(0);
+        String userMessage = errorMessages.get(0);
         logger.info(developerMessage);
         return new ResponseEntity<>(buildErrorResponse(userMessage, httpStatus.value()), httpStatus);
     }
 
-    public  Map<String, String>  buildErrorResponse(String message, int errorCode){
+    public Map<String, String> buildErrorResponse(String message, int errorCode) {
         Map<String, String> errorResponse = new HashMap<>();
         errorResponse.put("message", message);
         errorResponse.put("errorCode", String.valueOf(errorCode));

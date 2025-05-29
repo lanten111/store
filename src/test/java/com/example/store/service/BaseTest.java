@@ -1,5 +1,3 @@
 package com.example.store.service;
 
-class BaseTest {
-
-}
+class BaseTest {}

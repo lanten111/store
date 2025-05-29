@@ -1,14 +1,9 @@
 package com.example.store.config.cache;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.event.EventListener;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -23,8 +18,8 @@ public class CachingConfig {
 
     private final CacheTtlProperties cacheTtlProperties;
 
-//    @Autowired
-//    private CacheManager cacheManager;
+    //    @Autowired
+    //    private CacheManager cacheManager;
 
     public CachingConfig(CacheTtlProperties cacheTtlProperties) {
         this.cacheTtlProperties = cacheTtlProperties;
@@ -37,9 +32,7 @@ public class CachingConfig {
         for (Map.Entry<String, Long> entry : cacheTtlProperties.getTtl().entrySet()) {
             cacheConfigurations.put(
                     entry.getKey(),
-                    RedisCacheConfiguration.defaultCacheConfig()
-                            .entryTtl(Duration.ofSeconds(entry.getValue()))
-            );
+                    RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofSeconds(entry.getValue())));
         }
 
         return RedisCacheManager.builder(connectionFactory)
@@ -52,12 +45,12 @@ public class CachingConfig {
         return new CustomKeyGenerator();
     }
 
-//    @EventListener
-//    public void onApplicationEvent(ApplicationReadyEvent event) {
-//        cacheManager.getCacheNames()
-//                .parallelStream()
-//                .forEach(n -> {
-//                    cacheManager.getCache(n).clear();
-//                });
-//    }
+    //    @EventListener
+    //    public void onApplicationEvent(ApplicationReadyEvent event) {
+    //        cacheManager.getCacheNames()
+    //                .parallelStream()
+    //                .forEach(n -> {
+    //                    cacheManager.getCache(n).clear();
+    //                });
+    //    }
 }

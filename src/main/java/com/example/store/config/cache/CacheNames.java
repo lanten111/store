@@ -8,5 +8,4 @@ public class CacheNames {
     public static final String PRODUCT_LIST_DTO_CACHE_NAME = "PRODUCT_LIST_DTO_CACHE";
     public static final String PRODUCT_DTO_CACHE_NAME = "PRODUCT_DTO_CACHE";
     public static final String CUSTOMER_SEARCH_LIST_DTO_CACHE_NAME = "CUSTOMER_SEARCH_LIST_DTO_CACHE";
-
 }

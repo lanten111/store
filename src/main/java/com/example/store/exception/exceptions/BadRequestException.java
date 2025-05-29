@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class BadRequestException extends RuntimeException{
+public class BadRequestException extends RuntimeException {
 
     private final String developerMessage;
     private final String message;

@@ -16,5 +16,4 @@ public class MessagesSource {
         messageSource.setCacheSeconds(10);
         return messageSource;
     }
-
 }

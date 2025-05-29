@@ -6,15 +6,13 @@ import com.example.store.exception.exceptions.AlreadyExistException;
 import com.example.store.exception.exceptions.NotFoundException;
 import com.example.store.mapper.ProductMapper;
 import com.example.store.repository.ProductRepository;
-import com.example.store.service.ProductService;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 
 import java.util.LinkedList;
 import java.util.List;
@@ -39,11 +37,10 @@ class ProductServiceTest {
     private final Long productId = 1L;
 
     @BeforeEach
-    void setUp() {
-    }
+    void setUp() {}
 
     @Test
-    void CanSuccessfullyGetProductById(){
+    void CanSuccessfullyGetProductById() {
         when(productRepository.findById(productId)).thenReturn(Optional.ofNullable(getProduct()));
         when(productService.getProductEntity(productId)).thenReturn(getProduct());
         when(productMapper.productToProductDTO(any())).thenReturn(getProductDTO());
@@ -53,7 +50,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void CanThrowNotFoundExceptionWhenUsingInvalidId(){
+    void CanThrowNotFoundExceptionWhenUsingInvalidId() {
 
         when(productRepository.findById(any())).thenReturn(Optional.empty());
 
@@ -62,9 +59,8 @@ class ProductServiceTest {
         });
     }
 
-
     @Test
-    void CanSuccessfullyGetAllProducts(){
+    void CanSuccessfullyGetAllProducts() {
         when(productRepository.findAll()).thenReturn(getProducts());
         when(productMapper.productsTOProductDTOs(any())).thenReturn(getProductDTOs());
 
@@ -77,7 +73,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void CanSuccessfullyCreateProduct(){
+    void CanSuccessfullyCreateProduct() {
         when(productRepository.save(any())).thenReturn(getProduct());
         when(productRepository.findByName(any())).thenReturn(Optional.empty());
         when(productMapper.productToProductDTO(any())).thenReturn(getProductDTO());
@@ -90,7 +86,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void CanThrowAlreadyExistWhenCreatingProductWithNameThatExist(){
+    void CanThrowAlreadyExistWhenCreatingProductWithNameThatExist() {
 
         when(productRepository.findByName(getProductDTO().getName())).thenReturn(Optional.of(getProduct()));
         assertThrows(AlreadyExistException.class, () -> {
@@ -98,7 +94,7 @@ class ProductServiceTest {
         });
     }
 
-    public List<Product> getProducts(){
+    public List<Product> getProducts() {
 
         List<Product> products = new LinkedList<>();
         Product product = new Product();
@@ -116,7 +112,7 @@ class ProductServiceTest {
         return products;
     }
 
-    public List<ProductDTO> getProductDTOs(){
+    public List<ProductDTO> getProductDTOs() {
 
         List<ProductDTO> productDTOS = new LinkedList<>();
         ProductDTO productDTO = new ProductDTO();
@@ -133,8 +129,7 @@ class ProductServiceTest {
         return productDTOS;
     }
 
-
-    public Product getProduct(){
+    public Product getProduct() {
         Product product = new Product();
         product.setName("product");
         product.setDescription("product description");
@@ -142,12 +137,11 @@ class ProductServiceTest {
         return product;
     }
 
-    public ProductDTO getProductDTO(){
+    public ProductDTO getProductDTO() {
         ProductDTO productDTO = new ProductDTO();
         productDTO.setName("product");
         productDTO.setDescription("product description");
         productDTO.setProductId(productId);
         return productDTO;
     }
-
 }

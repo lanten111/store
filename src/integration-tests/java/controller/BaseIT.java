@@ -2,7 +2,7 @@ package controller;
 
 import com.example.store.StoreApplication;
 import com.redis.testcontainers.RedisContainer;
-import io.restassured.RestAssured;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,6 +12,8 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
+
+import io.restassured.RestAssured;
 
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = StoreApplication.class)
@@ -27,9 +29,7 @@ public class BaseIT {
             .withUsername("user")
             .withPassword("password");
 
-    static RedisContainer redis = new RedisContainer(
-            "redis:6.2.6"
-    );
+    static RedisContainer redis = new RedisContainer("redis:6.2.6");
 
     @BeforeAll
     static void beforeAll() {
@@ -49,7 +49,6 @@ public class BaseIT {
         registry.add("spring.datasource.username", postgres::getUsername);
         registry.add("spring.datasource.password", postgres::getPassword);
 
-
         registry.add("spring.data.redis.host", redis::getHost);
         registry.add("spring.data.redis.port", () -> redis.getMappedPort(6379));
     }
@@ -58,5 +57,4 @@ public class BaseIT {
     void setUp() {
         RestAssured.baseURI = "http://localhost:" + port;
     }
-
 }

@@ -1,6 +1,7 @@
 package com.example.store.config;
 
 import com.example.store.security.AuthEntryPointJwt;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,45 +22,44 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-	@Bean
-	public static PasswordEncoder passwordEncoder(){
-		return new BCryptPasswordEncoder();
-	}
+    @Bean
+    public static PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-	@Autowired
-	private UserDetailsService userDetailsService;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
-	@Autowired
-	private AuthEntryPointJwt unauthorizedHandler;
+    @Autowired
+    private AuthEntryPointJwt unauthorizedHandler;
 
-	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-		http
-				.csrf(AbstractHttpConfigurer::disable)
-				.exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
-				.authorizeHttpRequests((auth) ->
-						auth.requestMatchers(HttpMethod.POST,"/customer/login").permitAll()
-								.requestMatchers(HttpMethod.POST,"/logout/**").permitAll()
-								.requestMatchers(HttpMethod.POST,"/customer").permitAll()
-								.requestMatchers("/product").authenticated()
-								.anyRequest().authenticated()
+        http.csrf(AbstractHttpConfigurer::disable)
+                .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+                .authorizeHttpRequests((auth) -> auth.requestMatchers(HttpMethod.POST, "/customer/login")
+                        .permitAll()
+                        .requestMatchers(HttpMethod.POST, "/logout/**")
+                        .permitAll()
+                        .requestMatchers(HttpMethod.POST, "/customer")
+                        .permitAll()
+                        .requestMatchers("/product")
+                        .authenticated()
+                        .anyRequest()
+                        .authenticated())
+                .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED));
 
-				)
-				.sessionManagement(s -> s
-						.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-				);
+        return http.build();
+    }
 
-		return http.build();
-	}
+    @Bean
+    public AuthenticationManager authenticationManager(
+            UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder);
 
-
-	@Bean
-	public AuthenticationManager authenticationManager( UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
-		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-		authenticationProvider.setUserDetailsService(userDetailsService);
-		authenticationProvider.setPasswordEncoder(passwordEncoder);
-
-		return new ProviderManager(authenticationProvider);
-	}
+        return new ProviderManager(authenticationProvider);
+    }
 }
