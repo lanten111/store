@@ -1,3 +1,7 @@
+server:
+  port: 8086
+  servlet:
+    context-path: /store
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5433/store
