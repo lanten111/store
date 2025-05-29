@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -55,6 +56,14 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(buildErrorResponse(e.getMessage(), httpStatus.value()), httpStatus);
     }
 
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<Map<String, String>> handleBadNotFoundException(BadCredentialsException e) {
+        HttpStatus httpStatus = HttpStatus.UNAUTHORIZED;
+        logger.info(e.getMessage());
+        String message = messageSource.getMessage("store.auth.invalid.details", null, Locale.getDefault());
+        return new ResponseEntity<>(buildErrorResponse(message, httpStatus.value()), httpStatus);
+    }
+
     @ExceptionHandler(ForbiddenException.class)
     public ResponseEntity<Map<String, String>> handleForbiddenException(ForbiddenException e) {
         HttpStatus httpStatus = HttpStatus.FORBIDDEN;
@@ -66,18 +75,18 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, String>> handleUnhandledGeneralException(Exception e) {
         HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         String developerMessage = e.getMessage();
-        String userMessage = messageSource.getMessage("store.general.error", null, Locale.getDefault());
+        String message = messageSource.getMessage("store.general.error", null, Locale.getDefault());
         logger.error(developerMessage, e);
-        return new ResponseEntity<>(buildErrorResponse(userMessage, httpStatus.value()), httpStatus);
+        return new ResponseEntity<>(buildErrorResponse(message, httpStatus.value()), httpStatus);
     }
 
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<Map<String, String>> handleUnhandledGeneralException(NoResourceFoundException e) {
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
         String developerMessage = e.getMessage();
-        String userMessage = messageSource.getMessage("store.general.error", null, Locale.getDefault());
+        String message = messageSource.getMessage("store.general.error", null, Locale.getDefault());
         logger.error(developerMessage, e);
-        return new ResponseEntity<>(buildErrorResponse(userMessage, httpStatus.value()), httpStatus);
+        return new ResponseEntity<>(buildErrorResponse(message, httpStatus.value()), httpStatus);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -89,9 +98,9 @@ public class GlobalExceptionHandler {
                 .collect(Collectors.toList());
 
         String developerMessage = e.getMessage();
-        String userMessage = errorMessages.get(0);
+        String message = errorMessages.get(0);
         logger.info(developerMessage);
-        return new ResponseEntity<>(buildErrorResponse(userMessage, httpStatus.value()), httpStatus);
+        return new ResponseEntity<>(buildErrorResponse(message, httpStatus.value()), httpStatus);
     }
 
     @ExceptionHandler(UnauthorizedException.class)
