@@ -52,7 +52,7 @@ class ProductServiceTest {
     @Test
     void CanSuccessfullyGetAllProducts() {
         when(productRepository.findAll()).thenReturn(getProducts());
-        when(productMapper.productsTOProductDTOs(any())).thenReturn(getProductDTOs());
+        when(productMapper.productsToProductDTOs(any())).thenReturn(getProductDTOs());
 
         List<ProductDTO> productDTOS = productService.getProducts();
         assertEquals(2, productDTOS.size());
