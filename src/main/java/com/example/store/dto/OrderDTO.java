@@ -14,8 +14,7 @@ import java.util.List;
 public class OrderDTO implements Serializable {
     private Long orderId;
 
-    @NotNull(message = "{order.create.empty.customer}", groups = OnCreate.class)
-    private OrderCustomerDTO customer;
+    @NotNull(message = "{order.create.empty.customer}", groups = OnCreate.class) private OrderCustomerDTO customer;
 
     @NotEmpty(message = "{order.create.empty.product}", groups = OnCreate.class)
     private List<OrderProductDTO> products;

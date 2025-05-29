@@ -17,7 +17,7 @@ public class CustomerControllerIT extends BaseIT {
     @Test
     public void canGetAllCustomers() {
         List<CustomerDTO> customerDTOS = given().contentType(ContentType.JSON)
-                .header("Authorization", "Bearer "+BaseIT.validToken)
+                .header("Authorization", "Bearer " + BaseIT.validToken)
                 .when()
                 .get("/v1/customer")
                 .then()
@@ -30,15 +30,15 @@ public class CustomerControllerIT extends BaseIT {
     @Test
     public void canSearchCustomersByName() {
         given().contentType(ContentType.JSON)
-                .header("Authorization", "Bearer "+BaseIT.validToken)
+                .header("Authorization", "Bearer " + BaseIT.validToken)
                 .when()
                 .get("/v1/customer/search/j")
                 .then()
-                .statusCode(200  )
+                .statusCode(200)
                 .body("name", contains(getCustomerDTO().getName()));
     }
 
-    //can add tests to test exception
+    // can add tests to test exception
 
     public static CustomerDTO getCustomerDTO() {
         CustomerDTO customerDTO = new CustomerDTO();
@@ -47,5 +47,4 @@ public class CustomerControllerIT extends BaseIT {
         customerDTO.setPassword("P@assweord123");
         return customerDTO;
     }
-
 }

@@ -1,13 +1,11 @@
 package com.example.store.controller;
 
 import com.example.store.dto.OrderDTO;
-import com.example.store.entity.Order;
-import com.example.store.mapper.OrderMapper;
-import com.example.store.repository.OrderRepository;
-
 import com.example.store.service.OrderService;
 import com.example.store.validation.OnCreate;
+
 import jakarta.validation.constraints.NotBlank;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -36,7 +34,7 @@ public class OrderController {
     }
 
     @GetMapping("/{orderId}")
-    public ResponseEntity<OrderDTO> getOrder(@PathVariable @NotBlank Long orderId){
+    public ResponseEntity<OrderDTO> getOrder(@PathVariable @NotBlank Long orderId) {
         return new ResponseEntity<>(orderService.getOrderById(orderId), HttpStatus.CREATED);
     }
 }

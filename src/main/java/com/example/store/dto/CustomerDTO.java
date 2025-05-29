@@ -2,8 +2,8 @@ package com.example.store.dto;
 
 import com.example.store.validation.OnCreate;
 import com.example.store.validation.OnLogin;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

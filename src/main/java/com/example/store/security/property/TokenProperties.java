@@ -1,6 +1,7 @@
 package com.example.store.security.property;
 
 import lombok.Data;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 

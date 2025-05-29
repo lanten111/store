@@ -1,12 +1,12 @@
 package com.example.store.config;
 
 import com.example.store.security.AuthEntryPointJwt;
-
 import com.example.store.security.TokenServiceImpl;
 import com.example.store.security.UserDetailsServiceImpl;
 import com.example.store.security.filters.AuthTokenFilter;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.CacheManager;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -49,8 +49,7 @@ public class WebSecurityConfig {
 
         http.csrf(AbstractHttpConfigurer::disable)
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
-                .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers(HttpMethod.POST, "/v1/customer/login")
+                .authorizeHttpRequests((auth) -> auth.requestMatchers(HttpMethod.POST, "/v1/customer/login")
                         .permitAll()
                         .requestMatchers(HttpMethod.POST, "/v1/customer/logout")
                         .permitAll()

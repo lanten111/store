@@ -18,7 +18,7 @@ public class ProductControllerIT extends BaseIT {
     @Test
     public void canGetAllProducts() {
         List<ProductDTO> productDTOS = given().contentType(ContentType.JSON)
-                .header("Authorization", "Bearer "+BaseIT.validToken)
+                .header("Authorization", "Bearer " + BaseIT.validToken)
                 .when()
                 .get("/v1/product")
                 .then()
@@ -31,7 +31,7 @@ public class ProductControllerIT extends BaseIT {
     @Test
     public void canGetProductById() {
         List<ProductDTO> productDTOS = given().contentType(ContentType.JSON)
-                .header("Authorization", "Bearer "+BaseIT.validToken)
+                .header("Authorization", "Bearer " + BaseIT.validToken)
                 .when()
                 .get("/v1/product")
                 .then()
@@ -41,7 +41,7 @@ public class ProductControllerIT extends BaseIT {
                 .as(new TypeRef<List<ProductDTO>>() {});
 
         given().contentType(ContentType.JSON)
-                .header("Authorization", "Bearer "+BaseIT.validToken)
+                .header("Authorization", "Bearer " + BaseIT.validToken)
                 .when()
                 .get("/v1/product/" + productDTOS.get(0).getProductId())
                 .then()

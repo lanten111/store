@@ -1,9 +1,11 @@
 package controller;
 
 import com.example.store.dto.*;
+
+import org.junit.jupiter.api.*;
+
 import io.restassured.common.mapper.TypeRef;
 import io.restassured.http.ContentType;
-import org.junit.jupiter.api.*;
 
 import java.util.List;
 
@@ -15,7 +17,7 @@ public class OrderControllerIT extends BaseIT {
     @Test
     public void canGetAllOrders() {
         List<OrderDTO> orderDTOS = given().contentType(ContentType.JSON)
-                .header("Authorization", "Bearer "+BaseIT.validToken)
+                .header("Authorization", "Bearer " + BaseIT.validToken)
                 .when()
                 .get("/v1/order")
                 .then()
@@ -28,7 +30,7 @@ public class OrderControllerIT extends BaseIT {
     @Test
     public void canGetProductById() {
         List<OrderDTO> orderDTOS = given().contentType(ContentType.JSON)
-                .header("Authorization", "Bearer "+BaseIT.validToken)
+                .header("Authorization", "Bearer " + BaseIT.validToken)
                 .when()
                 .get("/v1/order")
                 .then()
@@ -38,7 +40,7 @@ public class OrderControllerIT extends BaseIT {
                 .as(new TypeRef<List<OrderDTO>>() {});
 
         given().contentType(ContentType.JSON)
-                .header("Authorization", "Bearer "+BaseIT.validToken)
+                .header("Authorization", "Bearer " + BaseIT.validToken)
                 .when()
                 .get("/v1/order/" + orderDTOS.get(0).getOrderId())
                 .then()
@@ -55,5 +57,4 @@ public class OrderControllerIT extends BaseIT {
         orderDTO.setProducts(List.of(productDTO));
         return orderDTO;
     }
-
 }

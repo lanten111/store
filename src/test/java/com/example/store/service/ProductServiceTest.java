@@ -8,7 +8,6 @@ import com.example.store.mapper.ProductMapper;
 import com.example.store.repository.ProductRepository;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

@@ -7,8 +7,6 @@ import com.example.store.dto.ProductDTO;
 import com.example.store.dto.TokenDTO;
 import com.redis.testcontainers.RedisContainer;
 
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -18,6 +16,8 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 
 import static controller.CustomerControllerIT.getCustomerDTO;
 import static controller.OrderControllerIT.getOrderDTO;
@@ -35,7 +35,6 @@ public class BaseIT {
     public static String validToken = "";
     public static Long customerId;
     public static Long productId;
-
 
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16-alpine")
             .withDatabaseName("testdb")
@@ -108,7 +107,7 @@ public class BaseIT {
     @Order(3)
     public void canCreateProduct() {
         ProductDTO productDTO = given().contentType(ContentType.JSON)
-                .header("Authorization", "Bearer "+BaseIT.validToken)
+                .header("Authorization", "Bearer " + BaseIT.validToken)
                 .body(getProductDTO())
                 .when()
                 .post("/v1/product")
@@ -125,7 +124,7 @@ public class BaseIT {
     public void canCreateOrder() {
 
         OrderDTO orderDTO = given().contentType(ContentType.JSON)
-                .header("Authorization", "Bearer "+BaseIT.validToken)
+                .header("Authorization", "Bearer " + BaseIT.validToken)
                 .body(getOrderDTO())
                 .when()
                 .post("/v1/order")
@@ -136,10 +135,9 @@ public class BaseIT {
         Assertions.assertNotNull(orderDTO.getOrderId());
     }
 
-
-    public static void canLogout(){
+    public static void canLogout() {
         Response response = given().contentType(ContentType.JSON)
-                .header("Authorization", "Bearer "+BaseIT.validToken)
+                .header("Authorization", "Bearer " + BaseIT.validToken)
                 .body(getCustomerDTO())
                 .when()
                 .post("/v1/customer/logout")

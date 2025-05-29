@@ -7,6 +7,9 @@ WORKDIR /app
 # Copy all files
 COPY . .
 
+# Build the application (fat jar)
+RUN gradle clean build -x test
+
 # -------- Run Stage --------
 FROM eclipse-temurin:17-jdk
 
