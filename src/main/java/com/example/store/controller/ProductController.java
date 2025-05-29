@@ -22,7 +22,6 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<ProductDTO> createProduct(@Validated(OnCreate.class) @RequestBody ProductDTO productDTO) {
         return new ResponseEntity<>(productService.createProduct(productDTO), HttpStatus.CREATED);
     }
@@ -34,6 +33,6 @@ public class ProductController {
 
     @GetMapping("/{productId}")
     public ResponseEntity<ProductDTO> getProduct(@Validated(OnGet.class) @PathVariable long productId) {
-        return new ResponseEntity<>(productService.getProduct(productId), HttpStatus.CREATED);
+        return new ResponseEntity<>(productService.getProduct(productId), HttpStatus.OK);
     }
 }

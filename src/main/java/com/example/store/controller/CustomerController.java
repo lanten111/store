@@ -41,7 +41,6 @@ public class CustomerController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<CustomerDTO> createCustomer(@Validated(OnCreate.class) @RequestBody CustomerDTO customerDTO) {
         return new ResponseEntity<>(customerService.createCustomer(customerDTO), HttpStatus.CREATED);
     }
@@ -53,6 +52,6 @@ public class CustomerController {
 
     @GetMapping("/search/{query}")
     public ResponseEntity<List<CustomerDTO>> searchCustomer(@PathVariable @NotBlank String query) {
-        return new ResponseEntity<>(customerService.customerSearch(query), HttpStatus.CREATED);
+        return new ResponseEntity<>(customerService.customerSearch(query), HttpStatus.OK);
     }
 }
