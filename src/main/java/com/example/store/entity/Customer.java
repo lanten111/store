@@ -18,6 +18,10 @@ public class Customer {
 
     private String name;
 
+    private String email;
+
+    private String password;
+
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Order> orders = new ArrayList<>();
 }
