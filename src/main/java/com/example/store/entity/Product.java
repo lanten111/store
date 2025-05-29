@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,5 +25,5 @@ public class Product {
     private String description;
 
     @ManyToMany(mappedBy = "products")
-    private List<Order> order;
+    private List<Order> orders = new ArrayList<>();
 }
