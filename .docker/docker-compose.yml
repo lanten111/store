@@ -1,6 +1,7 @@
 services:
   store:
     container_name: store
+    image: mumakahdo/store
     restart: always
     environment:
       - DB_USERNAME=admin
@@ -9,8 +10,10 @@ services:
       - REDIS_HOST=redis
       - TOKEN_SECRET=IS5IobIItq0pRX9JL9TvdQ40Oa93u2Wojlign4V3L30
     ports:
-      - 8086:8086
-    image: mumakahdo/store:latest
+      - "8086:8086"
+    depends_on:
+      - postgres
+      - redis
   postgres:
     container_name: postgres
     restart: always
@@ -21,7 +24,7 @@ services:
     volumes:
       - postgres:/var/lib/postgresql/data
     ports:
-      - 5433:5432
+      - "5432:5432"
     image: postgres:16.2
     command: postgres -c wal_level=logical
   redis:
