@@ -1,11 +1,12 @@
 package controller;
 
 import com.example.store.StoreApplication;
+import com.example.store.dto.CustomerDTO;
+import com.example.store.dto.TokenDTO;
 import com.redis.testcontainers.RedisContainer;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+import io.restassured.http.ContentType;
+import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.DynamicPropertyRegistry;
@@ -15,14 +16,18 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import io.restassured.RestAssured;
 
+import static io.restassured.RestAssured.given;
+
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = StoreApplication.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class BaseIT {
 
     @LocalServerPort
     private Integer port;
 
     private final Long productId = 1L;
+    public static String validToken = "";
 
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16-alpine")
             .withDatabaseName("testdb")
@@ -55,6 +60,36 @@ public class BaseIT {
 
     @BeforeEach
     void setUp() {
-        RestAssured.baseURI = "http://localhost:" + port;
+        RestAssured.baseURI = "http://localhost:" + port + "/store/api";
+    }
+
+    @Test
+    @Order(1)
+    void canCreateCustomer() {
+
+        CustomerDTO customerDTO = given().contentType(ContentType.JSON)
+                .body(CustomerControllerIT.getCustomerDTO())
+                .when()
+                .post("/v1/customer")
+                .then()
+                .statusCode(201)
+                .extract()
+                .as(CustomerDTO.class);
+        Assertions.assertEquals(customerDTO.getName(), CustomerControllerIT.getCustomerDTO().getName());
+    }
+
+    @Test
+    @Order(2)
+    void canLoginSuccessfully() {
+        TokenDTO tokenDTO = given().contentType(ContentType.JSON)
+                .body(CustomerControllerIT.getCustomerDTO())
+                .when()
+                .post("/v1/customer/login")
+                .then()
+                .statusCode(200)
+                .extract()
+                .as(TokenDTO.class);
+        Assertions.assertNotNull(validToken);
+        validToken = tokenDTO.getToken();
     }
 }
