@@ -11,7 +11,7 @@ jobs:
     environment: dev
 
     env:
-      IMAGE_NAME: ghcr.io/store
+      IMAGE_NAME: store
 
     steps:
       - name: Checkout code
