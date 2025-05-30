@@ -6,6 +6,7 @@ import com.example.store.validation.OnCreate;
 
 import jakarta.validation.constraints.NotBlank;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,7 @@ public class OrderController {
     }
 
     @GetMapping("/{orderId}")
-    public ResponseEntity<OrderDTO> getOrder(@PathVariable @NotBlank Long orderId) {
+    public ResponseEntity<OrderDTO> getOrder(@PathVariable @NotNull Long orderId) {
         return new ResponseEntity<>(orderService.getOrderById(orderId), HttpStatus.CREATED);
     }
 }

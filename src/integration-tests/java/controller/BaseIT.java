@@ -2,8 +2,6 @@ package controller;
 
 import com.example.store.StoreApplication;
 import com.example.store.dto.CustomerDTO;
-import com.example.store.dto.OrderDTO;
-import com.example.store.dto.ProductDTO;
 import com.example.store.dto.TokenDTO;
 import com.redis.testcontainers.RedisContainer;
 
@@ -20,8 +18,6 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 import static controller.CustomerControllerIT.getCustomerDTO;
-import static controller.OrderControllerIT.getOrderDTO;
-import static controller.ProductControllerIT.getProductDTO;
 import static io.restassured.RestAssured.given;
 
 @Testcontainers
@@ -33,8 +29,23 @@ public class BaseIT {
     private Integer port;
 
     public static String validToken = "";
-    public static Long customerId;
-    public static Long productId;
+    public static String hmacEncriptorKey = "b613679a0814d9ec772f95d778c35fc5ff1697c493715653c6c712144292c5ad";
+
+    public static String user1 = "user1";
+    public static String user2 = "user2";
+    public static String user3 = "user3";
+    public static String user4 = "user4";
+    public static String user5 = "user5";
+    public static String validPassword = "P@assword1";
+
+    public static String product1 = "product1";
+    public static String product2 = "product2";
+    public static String product3 = "product3";
+    public static String product4 = "product4";
+    public static String product5 = "product5";
+    public static String product6 = "product6";
+    public static String product7 = "product7";
+
 
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16-alpine")
             .withDatabaseName("testdb")
@@ -45,6 +56,8 @@ public class BaseIT {
 
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry) {
+        registry.add("token.secret", () -> hmacEncriptorKey);
+
         registry.add("spring.datasource.url", postgres::getJdbcUrl);
         registry.add("spring.datasource.username", postgres::getUsername);
         registry.add("spring.datasource.password", postgres::getPassword);
@@ -61,38 +74,20 @@ public class BaseIT {
 
     @AfterAll
     static void afterAll() {
-        canLogout();
         postgres.stop();
         redis.stop();
     }
 
     @BeforeEach
-    void setUp() {
-        RestAssured.baseURI = "http://localhost:" + port + "/store/api";
-    }
-
     @Test
-    @Order(1)
-    public void canCreateCustomer() {
-
-        CustomerDTO customerDTO = given().contentType(ContentType.JSON)
-                .body(getCustomerDTO())
-                .when()
-                .post("/v1/customer")
-                .then()
-                .statusCode(201)
-                .extract()
-                .as(CustomerDTO.class);
-        Assertions.assertEquals(customerDTO.getName(), getCustomerDTO().getName());
-        customerId = customerDTO.getCustomerId();
-    }
-
-    @Test
-    @Order(2)
     public void canLoginSuccessfully() {
-
+        RestAssured.baseURI = "http://localhost:" + port + "/store/api";
+        given().contentType(ContentType.JSON)
+                .body(getCustomerDTO(user1, validPassword))
+                .when()
+                .post("/v1/customer");
         TokenDTO tokenDTO = given().contentType(ContentType.JSON)
-                .body(getCustomerDTO())
+                .body(getCustomerDTO(user1, validPassword))
                 .when()
                 .post("/v1/customer/login")
                 .then()
@@ -101,50 +96,5 @@ public class BaseIT {
                 .as(TokenDTO.class);
         Assertions.assertNotNull(validToken);
         validToken = tokenDTO.getToken();
-    }
-
-    @Test
-    @Order(3)
-    public void canCreateProduct() {
-        ProductDTO productDTO = given().contentType(ContentType.JSON)
-                .header("Authorization", "Bearer " + BaseIT.validToken)
-                .body(getProductDTO())
-                .when()
-                .post("/v1/product")
-                .then()
-                .statusCode(201)
-                .extract()
-                .as(ProductDTO.class);
-        Assertions.assertEquals(productDTO.getName(), getProductDTO().getName());
-        Assertions.assertEquals(productDTO.getDescription(), getProductDTO().getDescription());
-        productId = productDTO.getProductId();
-    }
-
-    @Test
-    public void canCreateOrder() {
-
-        OrderDTO orderDTO = given().contentType(ContentType.JSON)
-                .header("Authorization", "Bearer " + BaseIT.validToken)
-                .body(getOrderDTO())
-                .when()
-                .post("/v1/order")
-                .then()
-                .statusCode(201)
-                .extract()
-                .as(OrderDTO.class);
-        Assertions.assertNotNull(orderDTO.getOrderId());
-    }
-
-    public static void canLogout() {
-        Response response = given().contentType(ContentType.JSON)
-                .header("Authorization", "Bearer " + BaseIT.validToken)
-                .body(getCustomerDTO())
-                .when()
-                .post("/v1/customer/logout")
-                .then()
-                .statusCode(200)
-                .extract()
-                .response();
-        Assertions.assertNotNull(response.toString());
     }
 }

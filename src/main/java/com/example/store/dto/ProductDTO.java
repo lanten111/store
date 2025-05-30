@@ -16,7 +16,8 @@ import java.util.List;
 @Data
 public class ProductDTO implements Serializable {
 
-    @NotNull(message = "{product.get.empty.query}", groups = OnGet.class) private Long productId;
+    @NotNull(message = "{product.get.empty.query}", groups = OnGet.class)
+    private Long productId;
 
     @NotBlank(message = "{product.create.empty.name}", groups = OnCreate.class)
     @Size(min = 8, max = 20, message = "{product.create.min.max.name}",groups = OnCreate.class)

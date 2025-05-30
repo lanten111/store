@@ -13,8 +13,8 @@ import java.util.List;
 
 @Data
 public class OrderDTO implements Serializable {
-    private Long orderId;
 
+    private Long orderId;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @NotNull(message = "{order.create.empty.customer}", groups = OnCreate.class)
     private OrderCustomerDTO customer;

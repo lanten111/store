@@ -16,43 +16,67 @@ import static org.hamcrest.Matchers.hasSize;
 public class ProductControllerIT extends BaseIT {
 
     @Test
+    public void canCreateProduct() {
+        ProductDTO productDTO = given().contentType(ContentType.JSON)
+                .header("Authorization", "Bearer " + BaseIT.validToken)
+                .body(getProductDTO(product1))
+                .when()
+                .post("/v1/product")
+                .then()
+                .statusCode(201)
+                .extract()
+                .as(ProductDTO.class);
+        Assertions.assertEquals(productDTO.getName(), product1);
+        Assertions.assertEquals(productDTO.getDescription(), product1 + "description");
+    }
+
+    @Test
     public void canGetAllProducts() {
+
+        given().contentType(ContentType.JSON)
+                .header("Authorization", "Bearer " + BaseIT.validToken)
+                .body(getProductDTO(product6))
+                .when()
+                .post("/v1/product")
+                .then()
+                .statusCode(201)
+                .extract()
+                .as(ProductDTO.class);
         List<ProductDTO> productDTOS = given().contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + BaseIT.validToken)
                 .when()
                 .get("/v1/product")
                 .then()
                 .statusCode(200)
-                .body(".", hasSize(1))
                 .extract()
                 .as(new TypeRef<List<ProductDTO>>() {});
+                Assertions.assertNotEquals(0, productDTOS.size());
     }
 
     @Test
     public void canGetProductById() {
-        List<ProductDTO> productDTOS = given().contentType(ContentType.JSON)
+        ProductDTO productDTO = given().contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + BaseIT.validToken)
+                .body(getProductDTO(product7))
                 .when()
-                .get("/v1/product")
+                .post("/v1/product")
                 .then()
-                .statusCode(200)
-                .body(".", hasSize(1))
+                .statusCode(201)
                 .extract()
-                .as(new TypeRef<List<ProductDTO>>() {});
-
+                .as(ProductDTO.class);
         given().contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + BaseIT.validToken)
                 .when()
-                .get("/v1/product/" + productDTOS.get(0).getProductId())
+                .get("/v1/product/" + productDTO.getProductId())
                 .then()
                 .statusCode(200)
-                .body("name", equalTo("product"));
+                .body("name", equalTo(product7));
     }
 
-    public static ProductDTO getProductDTO() {
+    public static ProductDTO getProductDTO(String name) {
         ProductDTO productDTO = new ProductDTO();
-        productDTO.setName("product");
-        productDTO.setDescription("product description");
+        productDTO.setName(name);
+        productDTO.setDescription(name + "description");
         return productDTO;
     }
 }
