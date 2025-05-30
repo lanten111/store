@@ -94,7 +94,6 @@ class ProductServiceTest {
 
         products.add(product);
         product = new Product();
-        product = new Product();
         product.setName("product2");
         product.setDescription("product2 description");
         product.setProductId(productId);
