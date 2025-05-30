@@ -11,6 +11,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -54,6 +55,14 @@ public class GlobalExceptionHandler {
         HttpStatus httpStatus = HttpStatus.NOT_FOUND;
         logger.info(e.getDeveloperMessage());
         return new ResponseEntity<>(buildErrorResponse(e.getMessage(), httpStatus.value()), httpStatus);
+    }
+
+    @ExceptionHandler(InternalAuthenticationServiceException.class)
+    public ResponseEntity<Map<String, String>> handleBadNotFoundException(InternalAuthenticationServiceException e) {
+        HttpStatus httpStatus = HttpStatus.UNAUTHORIZED;
+        logger.info(e.getMessage());
+        String message = messageSource.getMessage("store.auth.invalid.details", null, Locale.getDefault());
+        return new ResponseEntity<>(buildErrorResponse(message, httpStatus.value()), httpStatus);
     }
 
     @ExceptionHandler(BadCredentialsException.class)
