@@ -11,7 +11,6 @@ import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
 
 public class ProductControllerIT extends BaseIT {
 
@@ -50,7 +49,7 @@ public class ProductControllerIT extends BaseIT {
                 .statusCode(200)
                 .extract()
                 .as(new TypeRef<List<ProductDTO>>() {});
-                Assertions.assertNotEquals(0, productDTOS.size());
+        Assertions.assertNotEquals(0, productDTOS.size());
     }
 
     @Test

@@ -22,11 +22,17 @@ public class CustomerDTO implements Serializable {
     @Size(min = 8, max = 20, message = "{product.create.min.max.name}")
     private String name;
 
-    @NotBlank(message = "{customer.create.empty.email}", groups = {OnCreate.class, OnLogin.class})
-    @Email(message = "{customer.create.invalid.email}", groups = {OnCreate.class, OnLogin.class})
+    @NotBlank(
+            message = "{customer.create.empty.email}",
+            groups = {OnCreate.class, OnLogin.class})
+    @Email(
+            message = "{customer.create.invalid.email}",
+            groups = {OnCreate.class, OnLogin.class})
     private String email;
 
-    @NotBlank(message = "{customer.create.empty.password}", groups = {OnCreate.class, OnLogin.class})
+    @NotBlank(
+            message = "{customer.create.empty.password}",
+            groups = {OnCreate.class, OnLogin.class})
     @Pattern(
             regexp = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*()_+=-]).{8,}$",
             message = "{customer.create.invalid.password}",

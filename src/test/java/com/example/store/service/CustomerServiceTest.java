@@ -2,10 +2,10 @@ package com.example.store.service;
 
 import com.example.store.dto.CustomerDTO;
 import com.example.store.entity.Customer;
-import com.example.store.exception.exceptions.AlreadyExistException;
 import com.example.store.exception.exceptions.NotFoundException;
 import com.example.store.mapper.CustomerMapper;
 import com.example.store.repository.CustomerRepository;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-//TODO can add more test to test exception and validation
+// TODO can add more test to test exception and validation
 @ExtendWith(MockitoExtension.class)
 class CustomerServiceTest {
 
@@ -75,7 +75,6 @@ class CustomerServiceTest {
         verify(customerRepository, times(1)).findByEmail(any(String.class));
         verify(customerRepository, times(1)).save(any());
     }
-
 
     public List<Customer> getCustomers() {
 

@@ -1,7 +1,6 @@
 package controller;
 
 import com.example.store.StoreApplication;
-import com.example.store.dto.CustomerDTO;
 import com.example.store.dto.TokenDTO;
 import com.redis.testcontainers.RedisContainer;
 
@@ -16,7 +15,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 
 import static controller.CustomerControllerIT.getCustomerDTO;
 import static io.restassured.RestAssured.given;
@@ -47,7 +45,6 @@ public class BaseIT {
     public static String product5 = "product5";
     public static String product6 = "product6";
     public static String product7 = "product7";
-
 
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16-alpine")
             .withDatabaseName("testdb")

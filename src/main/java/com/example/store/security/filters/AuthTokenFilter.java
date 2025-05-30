@@ -42,7 +42,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             String jwt = parseJwt(request);
             if (jwt != null
                     && redisTemplate.opsForValue().get(tokenService.getEmailFromToken(jwt)) != null
-                    && Objects.equals(redisTemplate.opsForValue().get(tokenService.getEmailFromToken(jwt)),jwt)
+                    && Objects.equals(redisTemplate.opsForValue().get(tokenService.getEmailFromToken(jwt)), jwt)
                     && tokenService.validateToken(jwt)) {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(tokenService.getEmailFromToken(jwt));
                 UsernamePasswordAuthenticationToken authentication =

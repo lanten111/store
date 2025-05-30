@@ -2,8 +2,8 @@ package com.example.store.security;
 
 import com.example.store.dto.CustomerDTO;
 import com.example.store.dto.TokenDTO;
-
 import com.example.store.exception.exceptions.GeneralException;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -42,11 +42,11 @@ public class AuthenticationService {
 
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         if (authentication != null) {
-                UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
-                redisTemplate.opsForValue().getAndDelete(userPrincipal.getUsername());
-                logger.info("user with email {} logged out", (userPrincipal.getUsername()));
-            }else {
-                throw new GeneralException("security context is empty", "Cannot log out as no active session is found.");
-            }
+            UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+            redisTemplate.opsForValue().getAndDelete(userPrincipal.getUsername());
+            logger.info("user with email {} logged out", (userPrincipal.getUsername()));
+        } else {
+            throw new GeneralException("security context is empty", "Cannot log out as no active session is found.");
         }
+    }
 }

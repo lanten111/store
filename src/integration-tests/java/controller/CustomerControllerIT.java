@@ -2,11 +2,11 @@ package controller;
 
 import com.example.store.dto.CustomerDTO;
 
-import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
 
 import io.restassured.common.mapper.TypeRef;
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 
 import java.util.List;
 
@@ -27,7 +27,6 @@ public class CustomerControllerIT extends BaseIT {
                 .as(CustomerDTO.class);
         Assertions.assertEquals(customerDTO.getName(), user2);
     }
-
 
     @Test
     public void canGetAllCustomers() {
@@ -61,7 +60,7 @@ public class CustomerControllerIT extends BaseIT {
         given().contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + BaseIT.validToken)
                 .when()
-                .get("/v1/customer/search/"+searchString)
+                .get("/v1/customer/search/" + searchString)
                 .then()
                 .statusCode(200)
                 .body("name", contains(searchUser));

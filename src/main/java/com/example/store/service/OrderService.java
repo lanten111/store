@@ -56,7 +56,8 @@ public class OrderService {
             Product product = productService.getProductEntity(dto.getProductId());
             products.add(product);
         }
-        Customer customer = customerService.getCustomerById(orderDTO.getCustomer().getCustomerId());
+        Customer customer =
+                customerService.getCustomerById(orderDTO.getCustomer().getCustomerId());
         Order order = orderMapper.orderDtoToOrder(orderDTO);
         order.setProducts(products);
         order.setCustomer(customer);
@@ -68,7 +69,7 @@ public class OrderService {
         return orderMapper.orderToOrderDTO(savedOrder);
     }
 
-    //TODO admin role that can see all customers
+    // TODO admin role that can see all customers
     @Cacheable(cacheNames = ORDER_LIST_DTO_CACHE_NAME, keyGenerator = "customKeyGenerator")
     public List<OrderDTO> getAllOrders() {
         return orderMapper.ordersToOrderDTOs(orderRepository.findAll());

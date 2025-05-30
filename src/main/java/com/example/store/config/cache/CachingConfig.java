@@ -1,6 +1,7 @@
 package com.example.store.config.cache;
 
 import com.example.store.config.properties.CacheTtlProperties;
+
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
