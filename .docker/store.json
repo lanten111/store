@@ -221,31 +221,6 @@
           }
         },
         {
-          "name": "get product",
-          "event": [],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
-            "url": {
-              "raw": "{{host}}/product/1",
-              "protocol": "",
-              "host": [
-                "{{host}}"
-              ],
-              "path": [
-                "product",
-                "1"
-              ],
-              "query": [],
-              "variable": []
-            }
-          }
-        },
-        {
           "name": "order create",
           "event": [],
           "request": {
@@ -269,7 +244,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "  {\n    \"customer\":  {\n        \"customerId\":3\n      },\n    \"products\": [\n      {\n        \"productId\":2\n      },\n        {\n        \"productId\":3\n      }\n    ]    \n  }",
+              "raw": "  {\n    \"customer\":  {\n        \"customerId\":1\n      },\n    \"products\": [\n      {\n        \"productId\":1\n      }\n    ]    \n  }",
               "options": {
                 "raw": {
                   "language": "json"
@@ -307,7 +282,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "  {\n    \"name\": \"prodcut 212\",\n    \"description\": \"1\"\n  }",
+              "raw": "  {\n    \"name\": \"prodcut 212\",\n    \"description\": \"15444444444\"\n  }",
               "options": {
                 "raw": {
                   "language": "json"
