@@ -48,9 +48,15 @@ public class OrderService {
     }
 
     @CachePut(cacheNames = ORDER_DTO_CACHE_NAME, key = "#result.orderId")
-    @CacheEvict(cacheNames = {ORDER_LIST_DTO_CACHE_NAME,PRODUCT_DTO_CACHE_NAME,
-            CUSTOMER_DTO_CACHE_NAME,CUSTOMER_LIST_DTO_CACHE_NAME,PRODUCT_LIST_DTO_CACHE_NAME}
-            , allEntries = true)
+    @CacheEvict(
+            cacheNames = {
+                ORDER_LIST_DTO_CACHE_NAME,
+                PRODUCT_DTO_CACHE_NAME,
+                CUSTOMER_DTO_CACHE_NAME,
+                CUSTOMER_LIST_DTO_CACHE_NAME,
+                PRODUCT_LIST_DTO_CACHE_NAME
+            },
+            allEntries = true)
     public OrderDTO createOrder(OrderDTO orderDTO) {
         List<Product> products = new ArrayList<>();
         for (OrderProductDTO dto : orderDTO.getProducts()) {
