@@ -50,7 +50,7 @@ public class ProductService {
         return productMapper.productsToProductDTOs(productRepository.findAll());
     }
 
-    @Cacheable(value = ORDER_DTO_CACHE_NAME, key = "#productId")
+    @Cacheable(value = PRODUCT_DTO_CACHE_NAME, key = "#productId")
     public ProductDTO getProduct(Long productId) {
         return productMapper.productToProductDTO(getProductEntity(productId));
     }
