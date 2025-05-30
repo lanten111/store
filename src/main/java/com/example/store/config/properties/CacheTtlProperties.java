@@ -1,4 +1,4 @@
-package com.example.store.config.cache;
+package com.example.store.config.properties;
 
 import lombok.Getter;
 import lombok.Setter;

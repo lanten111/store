@@ -1,4 +1,4 @@
-package com.example.store.security.property;
+package com.example.store.config.properties;
 
 import lombok.Data;
 

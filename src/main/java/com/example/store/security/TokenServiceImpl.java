@@ -1,7 +1,7 @@
 package com.example.store.security;
 
 import com.example.store.config.MessagesSource;
-import com.example.store.security.property.TokenProperties;
+import com.example.store.config.properties.TokenProperties;
 
 import lombok.RequiredArgsConstructor;
 
