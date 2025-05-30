@@ -1,0 +1,383 @@
+{
+  "info": {
+    "name": "store",
+    "description": "",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "bruno",
+      "event": []
+    },
+    {
+      "name": "Customer",
+      "item": [
+        {
+          "name": "get customers",
+          "event": [],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{host}}/customer",
+              "protocol": "",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "customer"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Create customer",
+          "event": [],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{host}}/customer",
+              "protocol": "",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "customer"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "  {\n    \"name\": \"Muriel1 Donnell1y\",\n    \"email\": \"email@124.com\",\n    \"password\": \"P@assword1\"\n\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Customer login",
+          "event": [],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{host}}/customer/login",
+              "protocol": "",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "customer",
+                "login"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"email@124.com\",\n  \"password\": \"P@assword1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Customer search",
+          "event": [],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{host}}/customer/search/Muriel",
+              "protocol": "",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "customer",
+                "search",
+                "Muriel"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Customer logout",
+          "event": [],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{host}}/customer/logout",
+              "protocol": "",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "customer",
+                "logout"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "order",
+      "item": [
+        {
+          "name": "get all orders",
+          "event": [],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{host}}/order",
+              "protocol": "",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "order"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "get order",
+          "event": [],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{host}}/order?orderid=1",
+              "protocol": "",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "order?orderid=1"
+              ],
+              "query": [
+                {
+                  "key": "orderid",
+                  "value": "1"
+                }
+              ],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "get product",
+          "event": [],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{host}}/product/1",
+              "protocol": "",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "product",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "order create",
+          "event": [],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{host}}/order",
+              "protocol": "",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "order"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "  {\n    \"customer\":  {\n        \"customerId\":3\n      },\n    \"products\": [\n      {\n        \"productId\":2\n      },\n        {\n        \"productId\":3\n      }\n    ]    \n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "product",
+      "item": [
+        {
+          "name": "prodcut create",
+          "event": [],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{host}}/product",
+              "protocol": "",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "product"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "  {\n    \"name\": \"prodcut 212\",\n    \"description\": \"1\"\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "get products",
+          "event": [],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{host}}/product",
+              "protocol": "",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "product"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "get product",
+          "event": [],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{host}}/product/1",
+              "protocol": "",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "product",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "host",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "default"
+    }
+  ]
+}
