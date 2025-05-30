@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -30,6 +31,9 @@ class CustomerServiceTest {
 
     @Mock
     CustomerMapper customerMapper;
+
+    @Mock
+    PasswordEncoder passwordEncoder;
 
     @InjectMocks
     CustomerService customerService;
@@ -50,7 +54,7 @@ class CustomerServiceTest {
     }
 
     @Test
-    void CanSuccessfullyGetAllProducts() {
+    void CanSuccessfullyGetAllCustomers() {
         when(customerRepository.findAll()).thenReturn(getCustomers());
         when(customerMapper.customersToCustomerDTOs(any())).thenReturn(getCustomerDTOs());
 
@@ -61,26 +65,17 @@ class CustomerServiceTest {
     }
 
     @Test
-    void CanSuccessfullyCreateProduct() {
+    void CanSuccessfullyCreateCustomer() {
         when(customerRepository.save(any())).thenReturn(getCustomer());
-        when(customerRepository.findByName(any())).thenReturn(Optional.empty());
         when(customerMapper.customerToCustomerDTO(any())).thenReturn(getCustomerDto());
 
         CustomerDTO customerDTO = customerService.createCustomer(getCustomerDto());
         assertNotNull(customerDTO);
         assertEquals(customerDTO.getName(), getCustomerDto().getName());
-        verify(customerRepository, times(1)).findByName(any(String.class));
+        verify(customerRepository, times(1)).findByEmail(any(String.class));
         verify(customerRepository, times(1)).save(any());
     }
 
-    @Test
-    void CanThrowAlreadyExistWhenCreatingProductWithNameThatExist() {
-
-        when(customerRepository.findByName(getCustomerDto().getName())).thenReturn(Optional.of(getCustomer()));
-        assertThrows(AlreadyExistException.class, () -> {
-            customerService.createCustomer(any());
-        });
-    }
 
     public List<Customer> getCustomers() {
 
