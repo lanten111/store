@@ -99,7 +99,9 @@ tasks.named('test') {
 }
 
 tasks.jacocoTestReport {
-    dependsOn tasks.test // Ensure tests run before generating the report
+    dependsOn tasks.test, tasks.integrationTest
+
+    executionData(tasks.test, tasks.integrationTest)
 
     reports {
         html.required.set(true)
