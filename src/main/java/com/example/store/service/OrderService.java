@@ -68,6 +68,7 @@ public class OrderService {
         return orderMapper.orderToOrderDTO(savedOrder);
     }
 
+    //TODO admin role that can see all customers
     @Cacheable(cacheNames = ORDER_LIST_DTO_CACHE_NAME, keyGenerator = "customKeyGenerator")
     public List<OrderDTO> getAllOrders() {
         return orderMapper.ordersToOrderDTOs(orderRepository.findAll());

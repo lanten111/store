@@ -48,6 +48,7 @@ public class CustomerService {
         authenticationService.logout(request, response, authentication);
     }
 
+    //TODO admin role that can see all customers
     @Cacheable(value = CUSTOMER_LIST_DTO_CACHE_NAME, keyGenerator = "customKeyGenerator")
     public List<CustomerDTO> getAllCustomer() {
         return customerMapper.customersToCustomerDTOs(customerRepository.findAll());
